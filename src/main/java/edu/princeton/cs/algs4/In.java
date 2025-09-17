@@ -6,8 +6,7 @@
  *  Reads in data of various types from standard input, files, and URLs.
  *
  ******************************************************************************/
-
-package edu.princeton.cs.algs4;
+package algs4;
 
 import java.io.BufferedInputStream;
 import java.io.File;
