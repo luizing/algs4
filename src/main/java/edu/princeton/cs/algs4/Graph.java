@@ -192,9 +192,20 @@ public class Graph {
     public void addEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
+        if (v == w) {
+
+            System.out.println("Erro! SelfLoop");
+            return;
+
+        }
+        if (edgeCheck(v,w)){
+            System.out.println("Erro! Aresta Paralela");
+            return;
+        }
         E++;
         adj[v].add(w);
         adj[w].add(v);
+
     }
 
     public boolean edgeCheck(int a, int b){
