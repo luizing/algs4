@@ -4,7 +4,19 @@
 	<groupId>edu.princeton.cs</groupId>
 	<artifactId>algs4</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0.0</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>10</source>
+                    <target>10</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <version>1.0.0.0</version>
 	<name>algs4</name>
 	<licenses>
 		<license>

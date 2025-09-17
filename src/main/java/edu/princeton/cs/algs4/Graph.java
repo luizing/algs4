@@ -197,6 +197,21 @@ public class Graph {
         adj[w].add(v);
     }
 
+    public boolean edgeCheck(int a, int b){
+        for (int v = 0; v < V; v++) {
+            for (int w : adj[v]) {
+                if (a == v && b == w){
+                    return true;
+                }
+                if (a == w && b == v){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
 
     /**
      * Returns the vertices adjacent to vertex {@code v}.
