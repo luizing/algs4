@@ -36,7 +36,10 @@
 
 package edu.princeton.cs.algs4;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  *  The {@code Graph} class represents an undirected graph of vertices
@@ -74,6 +77,10 @@ public class Graph {
     private final int V;
     private int E;
     private Bag<Integer>[] adj;
+    public boolean[] marked ;
+    public int[] pre;
+    public int preCounter = 0;
+    private Queue<Integer> preorder;
 
     /**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -122,6 +129,10 @@ public class Graph {
                 validateVertex(w);
                 addEdge(v, w);
             }
+            this.pre = new int[V];
+            this.marked = new boolean[V];
+
+
         }
         catch (NoSuchElementException e) {
             throw new IllegalArgumentException("invalid input format in Graph constructor", e);
@@ -192,37 +203,64 @@ public class Graph {
     public void addEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
-        if (v == w) {
-
-            System.out.println("Erro! SelfLoop");
-            return;
-
-        }
-        if (edgeCheck(v,w)){
-            System.out.println("Erro! Aresta Paralela");
-            return;
-        }
         E++;
         adj[v].add(w);
-        adj[w].add(v);
-
+        //adj[w].add(v);
     }
 
-    public boolean edgeCheck(int a, int b){
-        for (int v = 0; v < V; v++) {
-            for (int w : adj[v]) {
-                if (a == v && b == w){
-                    return true;
-                }
-                if (a == w && b == v){
-                    return true;
-                }
+    public List<Integer> preorderTraversal(int v) {
+        List<Integer> ordem = new ArrayList<>();
+        boolean[] visited = new boolean[V];
+        dfsPreorder(v, visited, ordem);
+        return ordem;
+    }
+
+    private void dfsPreorder(int v, boolean[] visited, List<Integer> ordem) {
+        visited[v] = true;
+        ordem.add(Integer.valueOf(v));
+
+        for (int w : adj[v]) {
+            if (!visited[w]) {
+                dfsPreorder(w, visited, ordem);
             }
-
         }
-        return false;
     }
 
+    public int[][] adjMatrix(){
+        int[][] adjMatrix = new int[V][V];
+
+        for (int v = 0; v < V; v++){
+            for(int w: adj(v) ){
+                adjMatrix[v][w] = 1;
+            }
+        }
+
+        for (int i = 0; i < V; i++){
+            for (int j = 0; j < V; j++){
+                System.out.print(adjMatrix[i][j]);
+            }
+            System.out.println();
+        }
+
+
+        return adjMatrix;
+    }
+
+
+
+
+    public void Preorder(int v) {
+        marked[v] = true;
+        pre[v] = preCounter++;
+
+
+        for (int w : adj[v]) {
+            if (!marked[w]) {
+                Preorder(w);
+            }
+        }
+
+    }
 
     /**
      * Returns the vertices adjacent to vertex {@code v}.

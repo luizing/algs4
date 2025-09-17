@@ -17,5 +17,8 @@ public class Main {
 
         System.out.println(grafo);
 
+        System.out.println("===================");
+        grafo.Preorder(0);
+        System.out.println(grafo.preorderTraversal(0));
     }
 }
