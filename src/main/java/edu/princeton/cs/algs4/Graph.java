@@ -36,10 +36,7 @@
 
 package edu.princeton.cs.algs4;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 
 /**
  *  The {@code Graph} class represents an undirected graph of vertices
@@ -81,6 +78,10 @@ public class Graph {
     public int[] pre;
     public int preCounter = 0;
     private Queue<Integer> preorder;
+
+    //bfs
+    public boolean[] markedBFS;
+    public int[] edgeTo;
 
     /**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -246,7 +247,40 @@ public class Graph {
         return adjMatrix;
     }
 
+    public int[] bfs(int s){
+        validateVertex(s);
 
+        boolean [] visited = new boolean[V];
+        int [] dist = new int[V];
+        Arrays.fill(dist, -1);
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[s] = true;
+        dist[s] = 0;
+        queue.add(s);
+
+        while (!queue.isEmpty()){
+            int v = queue.poll();
+
+            for (int w : adj[v]){
+                if (!visited[w]){
+                    visited[w] = true;
+                    dist[w] = dist[v] + 1;
+                    queue.add(w);
+                }
+            }
+        }
+        return dist;
+    }
+
+    public void printBFS(int s) {
+        int[] dist = bfs(s);
+        System.out.println("Distâncias a partir do vértice " + s + ":");
+        for (int v = 0; v < V; v++) {
+            System.out.println("Vértice " + v + " -> Distância: " + dist[v]);
+        }
+    }
 
 
     public void Preorder(int v) {
